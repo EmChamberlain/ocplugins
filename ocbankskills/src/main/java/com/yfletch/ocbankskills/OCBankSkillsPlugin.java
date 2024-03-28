@@ -40,9 +40,11 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 		log.info("Delaying");
 	}
 
+
 	@Override
 	public void setup()
 	{
+		log.info("Delaying");
 		requirements().name("Config requirements")
 			.must(c -> primary().length > 0, "Primary item(s) must be set")
 			.must(c -> secondary().length > 0, "Secondary item(s) must be set")
