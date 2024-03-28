@@ -173,10 +173,10 @@ Plugin API" to `One-click (auto)`
 ### OC Core
 
 Core FSM library for one-click plugins. See example implementations
-in [TestPlugin](https://github.com/y-fletch/ocplugins/blob/main/occore/src/main/java/com/yfletch/occore/v2/test/TestPlugin.java)
-, [OCBankSkillsPlugin](https://github.com/y-fletch/ocplugins/blob/main/ocbankskills/src/main/java/com/yfletch/ocbankskills/OCBankSkillsPlugin.java)
-, [OCBwansPlugin](https://github.com/y-fletch/ocplugins/blob/main/ocbwans/src/main/java/com/yfletch/ocbwans/OCBwansPlugin.java)
-or [OCPickpocketPlugin](https://github.com/y-fletch/ocplugins/blob/main/ocpickpocket/src/main/java/com/yfletch/ocpickpocket/OCPickpocketPlugin.java)
+in [TestPlugin](https://github.com/EmChamberlain/ocplugins/blob/main/occore/src/main/java/com/yfletch/occore/v2/test/TestPlugin.java)
+, [OCBankSkillsPlugin](https://github.com/EmChamberlain/ocplugins/blob/main/ocbankskills/src/main/java/com/yfletch/ocbankskills/OCBankSkillsPlugin.java)
+, [OCBwansPlugin](https://github.com/EmChamberlain/ocplugins/blob/main/ocbwans/src/main/java/com/yfletch/ocbwans/OCBwansPlugin.java)
+or [OCPickpocketPlugin](https://github.com/EmChamberlain/ocplugins/blob/main/ocpickpocket/src/main/java/com/yfletch/ocpickpocket/OCPickpocketPlugin.java)
 .
 
 **Does not need to be installed for other plugins to work**

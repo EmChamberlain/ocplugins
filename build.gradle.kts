@@ -13,8 +13,8 @@ plugins {
     kotlin("jvm") version "1.6.21"
 }
 
-project.extra["GithubUrl"] = "https://github.com/y-fletch/ocplugins"
-project.extra["GithubUserName"] = "y-fletch"
+project.extra["GithubUrl"] = "https://github.com/EmChamberlain/ocplugins"
+project.extra["GithubUserName"] = "EmChamberlain"
 project.extra["GithubRepoName"] = "ocplugins"
 
 apply<BootstrapPlugin>()
@@ -22,8 +22,8 @@ apply<BootstrapPlugin>()
 allprojects {
     group = "net.unethicalite"
 
-    project.extra["PluginProvider"] = "y-fletch"
-    project.extra["ProjectSupportUrl"] = "https://github.com/y-fletch/ocplugins"
+    project.extra["PluginProvider"] = "EmChamberlain"
+    project.extra["ProjectSupportUrl"] = "https://github.com/EmChamberlain/ocplugins"
     project.extra["PluginLicense"] = "3-Clause BSD License"
 
     apply<JavaPlugin>()
