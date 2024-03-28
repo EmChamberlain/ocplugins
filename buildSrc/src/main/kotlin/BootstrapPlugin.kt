@@ -12,7 +12,6 @@ class BootstrapPlugin : Plugin<Project> {
                 project.subprojects.forEach {
                     dependsOn(it.project.tasks.get("jar"))
                     mustRunAfter(it.project.tasks.get("jar"))
-                    println("Configuring")
                 }
             }
         }
