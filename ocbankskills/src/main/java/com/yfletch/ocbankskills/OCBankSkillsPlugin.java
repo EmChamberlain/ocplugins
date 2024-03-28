@@ -22,7 +22,7 @@ import org.pf4j.Extension;
 @Slf4j
 @Extension
 @PluginDescriptor(
-	name = "OC Bank Skills",
+	name = "OC Bank Skills custom",
 	enabledByDefault = false
 )
 public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
