@@ -36,7 +36,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 		setContext(context);
 		setConfigGroup(BankSkillsConfig.GROUP_NAME);
 		refreshOnConfigChange(true);
-		actionsPerTick(1);
+		actionsPerTick(2);
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
 			.delay(1).delay(1);
-		System.out.println("Delaying");
+		log.debug("Delaying");
 	}
 
 	private String[] primary()
