@@ -1,4 +1,5 @@
 import ProjectVersions.unethicaliteVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     repositories {
@@ -61,6 +62,11 @@ allprojects {
     tasks {
         withType<JavaCompile> {
             options.encoding = "UTF-8"
+            outputs.upToDateWhen { false }
+        }
+
+        withType<KotlinCompile> {
+            outputs.upToDateWhen { false }
         }
 
         withType<AbstractArchiveTask> {
@@ -77,6 +83,10 @@ allprojects {
         register<Copy>("copyDeps") {
             into("./build/deps/")
             from(configurations["runtimeClasspath"])
+        }
+
+        withType<Jar> {
+            outputs.upToDateWhen { false }
         }
     }
 }

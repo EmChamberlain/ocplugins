@@ -1,6 +1,6 @@
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import groovy.lang.Closure
 import org.gradle.api.DefaultTask
+import org.gradle.api.Task
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.get
@@ -133,4 +133,5 @@ open class BootstrapTask : DefaultTask() {
         }
 
     }
+
 }
