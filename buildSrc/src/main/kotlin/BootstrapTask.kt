@@ -25,15 +25,17 @@ open class BootstrapTask : DefaultTask() {
     }
 
     private fun getBootstrap(): JSONArray? {
-        val client = OkHttpClient()
-
-        val url = "https://raw.githubusercontent.com/EmChamberlain/ocplugins/main/plugins.json"
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        client.newCall(request).execute()
-            .use { response -> return JSONObject("{\"plugins\":${response.body!!.string()}}").getJSONArray("plugins") }
+        val pluginsJSONFile = File("${project.projectDir}/plugins.json")
+        return JSONArray(pluginsJSONFile.readText())
+//        val client = OkHttpClient()
+//
+//        val url = "https://raw.githubusercontent.com/EmChamberlain/ocplugins/main/plugins.json"
+//        val request = Request.Builder()
+//            .url(url)
+//            .build()
+//
+//        client.newCall(request).execute()
+//            .use { response -> return JSONObject("{\"plugins\":${response.body!!.string()}}").getJSONArray("plugins") }
     }
 
     @TaskAction
@@ -107,7 +109,8 @@ open class BootstrapTask : DefaultTask() {
                             Paths.get(
                                 finalReleaseDir.toString(),
                                 "${it.project.name}-${it.project.version}.jar"
-                            ).toFile()
+                            ).toFile(),
+                            true
                         )
                     }
 
@@ -117,7 +120,8 @@ open class BootstrapTask : DefaultTask() {
                             Paths.get(
                                 finalReleaseDir.toString(),
                                 "${it.project.name}-${it.project.version}.jar"
-                            ).toFile()
+                            ).toFile(),
+                            true
                         )
                     }
                 }
