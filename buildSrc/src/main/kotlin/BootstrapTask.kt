@@ -26,7 +26,10 @@ open class BootstrapTask : DefaultTask() {
 
     private fun getBootstrap(): JSONArray? {
         val pluginsJSONFile = File("${project.projectDir}/plugins.json")
-        return JSONArray(pluginsJSONFile.readText())
+        var jsonString = pluginsJSONFile.readText()
+        if (jsonString.length == 0)
+            return JSONArray("[]")
+        return JSONArray(jsonString)
 //        val client = OkHttpClient()
 //
 //        val url = "https://raw.githubusercontent.com/EmChamberlain/ocplugins/main/plugins.json"
