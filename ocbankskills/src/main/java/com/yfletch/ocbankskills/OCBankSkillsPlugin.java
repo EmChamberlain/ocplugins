@@ -83,7 +83,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 		action().name("Close bank")
 			.when(c -> Bank.isOpen())
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
-			.delay(1);//.delay(1);
+			.delay(1).delay(1);
 
 		action().name("Click make")
 			.when(c -> widget(product()).exists())
@@ -96,7 +96,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.when(c -> Inventory.contains(secondary()))
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
-			.delay(1);//.delay(1);
+			.delay(1).delay(1);
 
 	}
 
