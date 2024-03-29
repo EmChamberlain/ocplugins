@@ -37,7 +37,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 		setConfigGroup(BankSkillsConfig.GROUP_NAME);
 		refreshOnConfigChange(true);
 		actionsPerTick(4);
-		log.info("Bank skills init called 1");
+		//log.info("Bank skills init called 1");
 	}
 
 
@@ -91,7 +91,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			;//.delay(1);
 
 		action().name("Use items")
-			//.when(c -> !c.isAnimating())
+			.when(c -> !c.isAnimating())
 			.when(c -> Inventory.contains(primary()))
 			.when(c -> Inventory.contains(secondary()))
 			.then(c -> item(primary()).useOn(item(secondary())))
