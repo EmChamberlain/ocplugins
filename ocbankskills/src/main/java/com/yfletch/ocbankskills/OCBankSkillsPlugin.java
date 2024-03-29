@@ -91,7 +91,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			;//.delay(1);
 
 		action().name("Use items")
-			.when(c -> !c.isAnimating())
+			//.when(c -> !c.isAnimating())
 			.when(c -> Inventory.contains(primary()))
 			.when(c -> Inventory.contains(secondary()))
 			.then(c -> item(primary()).useOn(item(secondary())))
