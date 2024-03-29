@@ -94,7 +94,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.when(c -> !c.isAnimating())
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
-			.delay(1);//.delay(1);
+			;//.delay(1);//.delay(1);
 
 	}
 
