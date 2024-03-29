@@ -36,7 +36,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 		setContext(context);
 		setConfigGroup(BankSkillsConfig.GROUP_NAME);
 		refreshOnConfigChange(true);
-		actionsPerTick(4);
+		actionsPerTick(1);
 		//log.info("Bank skills init called 1");
 	}
 
@@ -71,24 +71,24 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.when(c -> Bank.isOpen())
 			.until(c -> Inventory.contains(primary()))
 			.then(c -> banked(primary()).withdrawX())
-			.delay(1);
+			.delay(2);
 
 		action().name("Withdraw secondary")
 			.oncePerTick()
 			.when(c -> Bank.isOpen())
 			.until(c -> Inventory.contains(secondary()))
 			.then(c -> banked(secondary()).withdrawX())
-			.delay(1);
+			.delay(2);
 
 		action().name("Close bank")
 			.when(c -> Bank.isOpen())
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
-			.delay(1).delay(1);
+			.delay(4);
 
 		action().name("Click make")
 			.when(c -> widget(product()).exists())
 			.then(c -> widget(product()).interact("Make"))
-			;//.delay(1);
+			.delay(1);
 
 		action().name("Use items")
 			.when(c -> !c.isAnimating())
@@ -96,7 +96,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.when(c -> Inventory.contains(secondary()))
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
-			.delay(1).delay(1);
+			.delay(4);
 
 	}
 
