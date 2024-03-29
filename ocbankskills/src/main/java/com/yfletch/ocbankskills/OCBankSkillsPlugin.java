@@ -71,14 +71,14 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.when(c -> Bank.isOpen())
 			.until(c -> Inventory.contains(primary()))
 			.then(c -> banked(primary()).withdrawX())
-			.delay(2);
+			.delay(4);
 
 		action().name("Withdraw secondary")
 			.oncePerTick()
 			.when(c -> Bank.isOpen())
 			.until(c -> Inventory.contains(secondary()))
 			.then(c -> banked(secondary()).withdrawX())
-			.delay(2);
+			.delay(4);
 
 		action().name("Close bank")
 			.when(c -> Bank.isOpen())
