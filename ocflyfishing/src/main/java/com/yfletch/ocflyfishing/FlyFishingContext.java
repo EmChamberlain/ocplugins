@@ -16,8 +16,8 @@ public class FlyFishingContext extends CoreContext
 
 	public boolean isFishing()
 	{
-		log.info("Animation: " + client.getLocalPlayer().getAnimation());
-		return client.getLocalPlayer().getAnimation() == FISHING_ANIMATION;
+		//log.info("Animation: " + client.getLocalPlayer().getAnimation());
+		return client.getLocalPlayer().getAnimation() == FISHING_ANIMATION || client.getLocalPlayer().getAnimation() == 622;
 	}
 
 	public boolean isCooking()
