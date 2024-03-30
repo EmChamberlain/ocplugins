@@ -49,10 +49,11 @@ public class OCFlyFishingPlugin extends RunnerPlugin<FlyFishingContext>
 			.onClick(c -> c.clear("cooking"));
 
 		action().name("Lure fishing spot")
+			.oncePerTick()
 			.when(c -> Inventory.getFreeSlots() > 0 && !c.isFishing() && !c.isCooking())
 			.then(c -> npc("Rod Fishing spot").interact("Lure"))
 			.until(c -> c.isFishing())
-			.delay(2).repeat(2);
+			.delay(2).many();
 
 		action().name("Cook trout")
 			.when(c -> widget("Trout").exists())
