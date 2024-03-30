@@ -58,7 +58,8 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.when(c -> !Inventory.contains(primary()) || !Inventory.contains(secondary()))
 			.until(c -> Bank.isOpen())
 			.then(c -> entity(nameContaining("bank")).interact("Use", "Bank"))
-			.delay(1);
+			.delay(1)
+			.repeat(2);
 
 		action().name("Deposit other items")
 			.oncePerTick()
