@@ -31,6 +31,7 @@ public class OCFlyFishingPlugin extends RunnerPlugin<FlyFishingContext>
 		setConfig(config);
 		setContext(context);
 		setConfigGroup(FlyFishingConfig.GROUP_NAME);
+		actionsPerTick(1);
 	}
 
 	@Override
@@ -49,7 +50,8 @@ public class OCFlyFishingPlugin extends RunnerPlugin<FlyFishingContext>
 
 		action().name("Lure fishing spot")
 			.when(c -> Inventory.getFreeSlots() > 0 && !c.isFishing() && !c.isCooking())
-			.then(c -> npc("Rod Fishing spot").interact("Lure"));
+			.then(c -> npc("Rod Fishing spot").interact("Lure"))
+			.delay(2).repeat(2);
 
 		action().name("Cook trout")
 			.when(c -> widget("Trout").exists())
@@ -63,7 +65,8 @@ public class OCFlyFishingPlugin extends RunnerPlugin<FlyFishingContext>
 
 		action().name("Cook fish")
 			.when(c -> Inventory.isFull() && !c.isCooking())
-			.then(c -> object("Fire").interact("Cook"));
+			.then(c -> object("Fire").interact("Cook"))
+			.delay(2).repeat(2);
 	}
 
 	@Provides
