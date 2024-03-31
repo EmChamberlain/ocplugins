@@ -83,20 +83,20 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 				&& c.getBankableItems().length > 0)
 			.then(c -> item(c.getBankableItems()).depositX())
 			.until(c -> c.getBankableItems().length == 0)
-			.many()
-			.delay(2);
+			.repeat(2)
+			.delay(1);
 
 		action().name("Withdraw items")
 			.when(c -> Bank.isOpen() && !Inventory.contains(item))
 			.then(c -> banked(item).withdrawX())
 			.until(c -> Inventory.contains(item))
-			.delay(2);
+			.delay(1);
 
 		action().name("Close bank")
 			.when(c -> Bank.isOpen() && Inventory.contains(item))
 			.until(c -> !Bank.isOpen())
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
-			.delay(2);
+			.delay(1);
 
 		action().name("Cast spell on item")
 			.when(c -> !Bank.isOpen() && config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
