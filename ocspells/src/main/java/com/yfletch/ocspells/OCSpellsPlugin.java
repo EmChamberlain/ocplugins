@@ -84,6 +84,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 				&& c.getBankableItems().length > 0)
 			.then(c -> item(c.getBankableItems()[0]).depositAll())
 			.delay(1,2)
+			.many()
 			.resetsOnTick(true);
 
 		action().name("Withdraw items")
@@ -99,11 +100,13 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 
 		action().name("Cast spell on item")
 			.when(c -> config.castOnItem() && !c.flag("casting"))
+			.when(c -> Inventory.contains(items))
 			.then(c -> spell(spell).castOn(item(items)))
 			.onClick(c -> c.flag("casting", true, 5));
 
 		action().name("Cast spell on item")
 			.when(c -> !config.castOnItem() && !c.flag("casting"))
+			.when(c -> Inventory.contains(items))
 			.then(c -> spell(spell).cast())
 			.onClick(c -> c.flag("casting", true, 5));
 
