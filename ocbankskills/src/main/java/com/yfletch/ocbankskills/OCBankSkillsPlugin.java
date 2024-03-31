@@ -70,46 +70,38 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 
 		action().name("Withdraw primary")
 			.oncePerTick()
-			.when(c -> Bank.isOpen())
-			.when(c -> !Inventory.contains(primary()))
-			.until(c -> Inventory.contains(primary()))
+			.when(c -> Bank.isOpen() && !Inventory.contains(primary()))
 			.then(c -> banked(primary()).withdrawX())
-			.delay(4);
+			.until(c -> Inventory.contains(primary()))
+			.delay(1);
 
 		action().name("Withdraw secondary")
 			.oncePerTick()
-			.when(c -> Bank.isOpen())
-			.when(c -> !Inventory.contains(secondary()))
-			.until(c -> Inventory.contains(secondary()))
+			.when(c -> Bank.isOpen() && !Inventory.contains(secondary()))
 			.then(c -> banked(secondary()).withdrawX())
-			.delay(4);
+			.until(c -> Inventory.contains(secondary()))
+			.delay(1);
 
 		action().name("Close bank")
+			.oncePerTick()
 			.when(c -> Bank.isOpen())
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
-			.delay(2);
+			.delay(1)
+			.repeat(2);
 
 		action().name("Click make")
 			.when(c -> widget(product()).exists())
 			.then(c -> widget(product()).interact("Make"))
-			.delay(1);
+			.delay(1)
+			.repeat(1);
 
 		action().name("Use items")
-			.when(c -> !c.isAnimating())
-			.when(c -> Inventory.contains(primary()))
-			.when(c -> Inventory.contains(secondary()))
+			.oncePerTick()
+			.when(c -> !c.isAnimating() && Inventory.contains(primary()) && Inventory.contains(secondary()))
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
-			.delay(2)
-			.repeat(2);
-
-		action().name("Use items")
-			//.when(c -> !c.isAnimating())
-			.when(c -> Inventory.contains(primary()))
-			.when(c -> Inventory.contains(secondary()))
-			.then(c -> item(primary()).useOn(item(secondary())))
-			// doesn't work on the same tick the bank was opened
-			.delay(2);
+			.delay(1)
+			.repeat(5);
 
 	}
 
