@@ -75,7 +75,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.when(c -> !Inventory.contains(items) && !Bank.isOpen())
 			.until(c -> Bank.isOpen())
 			.then(c -> entity(nameContaining("Bank")).interact("Use", "Bank"))
-			.delay(1,2);
+			.delay(2);
 
 		action().name("Deposit other items")
 			.when(c -> Bank.isOpen()
@@ -83,30 +83,31 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 				&& c.getBankableItems().length > 0)
 			.then(c -> item(c.getBankableItems()).depositX())
 			.until(c -> c.getBankableItems().length == 0)
-			.delay(1,2);
+			.many()
+			.delay(2);
 
 		action().name("Withdraw items")
 			.when(c -> Bank.isOpen() && !Inventory.contains(items))
 			.until(c -> Inventory.contains(items))
 			.then(c -> banked(items).withdrawX())
-			.delay(1,2);
+			.delay(2);
 
 		action().name("Close bank")
 			.when(c -> Bank.isOpen() && Inventory.contains(items))
 			.until(c -> !Bank.isOpen())
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
-			.delay(1,2);
+			.delay(2);
 
 		action().name("Cast spell on item")
 			.when(c -> !Bank.isOpen() && config.castOnItem() && !c.flag("casting") && Inventory.contains(items))
 			.then(c -> spell(spell).castOn(item(items)))
-			.delay(1,2)
+			.delay(2)
 			.onClick(c -> c.flag("casting", true, 5));
 
 		action().name("Cast spell")
 			.when(c -> !Bank.isOpen() && !config.castOnItem() && !c.flag("casting") && Inventory.contains(items))
 			.then(c -> spell(spell).cast())
-			.delay(1,2)
+			.delay(2)
 			.onClick(c -> c.flag("casting", true, 5));
 
 		action().name("Casting spell")
