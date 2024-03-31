@@ -99,15 +99,15 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.resetsOnTick(true);
 
 		action().name("Cast spell on item")
-			.when(c -> config.castOnItem() && !c.flag("casting"))
-			.when(c -> Inventory.contains(items))
+			.when(c -> config.castOnItem() && !c.flag("casting") && Inventory.contains(items))
 			.then(c -> spell(spell).castOn(item(items)))
+			.delay(1,2)
 			.onClick(c -> c.flag("casting", true, 5));
 
 		action().name("Cast spell on item")
-			.when(c -> !config.castOnItem() && !c.flag("casting"))
-			.when(c -> Inventory.contains(items))
+			.when(c -> !config.castOnItem() && !c.flag("casting") && Inventory.contains(items))
 			.then(c -> spell(spell).cast())
+			.delay(1,2)
 			.onClick(c -> c.flag("casting", true, 5));
 
 		action().name("Casting spell")
