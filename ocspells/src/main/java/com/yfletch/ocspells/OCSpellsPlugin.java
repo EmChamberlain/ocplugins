@@ -76,6 +76,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.when(c -> !Bank.isOpen())
 			.until(c -> Bank.isOpen())
 			.then(c -> entity(nameContaining("Bank")).interact("Use", "Bank"))
+			.delay(1,2)
 			.resetsOnTick(true);
 
 		action().name("Deposit other items")
