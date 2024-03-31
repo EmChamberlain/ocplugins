@@ -73,23 +73,30 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 
 		action().name("Open bank")
 			.when(c -> !Inventory.contains(items))
+			.when(c -> !Bank.isOpen())
 			.until(c -> Bank.isOpen())
-			.then(c -> entity(nameContaining("Bank")).interact("Use", "Bank"));
+			.then(c -> entity(nameContaining("Bank")).interact("Use", "Bank"))
+			.resetsOnTick(true);
 
 		action().name("Deposit other items")
 			.when(c -> Bank.isOpen()
 				&& !Inventory.contains(items)
 				&& c.getBankableItems().length > 0)
 			.then(c -> item(c.getBankableItems()).depositAll())
-			.many();
+			.many()
+			.delay(2)
+			.resetsOnTick(true);
 
 		action().name("Withdraw items")
 			.when(c -> Bank.isOpen() && !Inventory.contains(items))
-			.then(c -> banked(items).withdrawAll());
+			.then(c -> banked(items).withdrawAll())
+			.delay(2)
+			.resetsOnTick(true);
 
 		action().name("Close bank")
 			.when(c -> Bank.isOpen() && Inventory.contains(items))
-			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact());
+			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
+			.resetsOnTick(true);
 
 		action().name("Cast spell on item")
 			.when(c -> config.castOnItem() && !c.flag("casting"))
