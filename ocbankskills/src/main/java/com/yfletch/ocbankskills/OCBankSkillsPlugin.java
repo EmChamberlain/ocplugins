@@ -55,9 +55,10 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.mustHave(join(primary(), secondary()));
 
 		action().name("Open bank")
-			.when(c -> !Inventory.contains(primary()) || !Inventory.contains(secondary()))
-			.until(c -> Bank.isOpen())
+			.oncePerTick()
+			.when(c -> (!Inventory.contains(primary()) || !Inventory.contains(secondary())) && (!Bank.isOpen()))
 			.then(c -> entity(nameContaining("bank")).interact("Use", "Bank"))
+			.until(c -> Bank.isOpen())
 			.delay(1)
 			.repeat(2);
 
