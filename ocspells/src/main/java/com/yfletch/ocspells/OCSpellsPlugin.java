@@ -72,8 +72,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.mustHaveBanked(items);
 
 		action().name("Open bank")
-			.when(c -> !Inventory.contains(items))
-			.when(c -> !Bank.isOpen())
+			.when(c -> !Inventory.contains(items) && !Bank.isOpen())
 			.until(c -> Bank.isOpen())
 			.then(c -> entity(nameContaining("Bank")).interact("Use", "Bank"))
 			.delay(1,2);
