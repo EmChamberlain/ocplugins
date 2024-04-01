@@ -62,7 +62,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.then(c -> entity(nameContaining("bank")).interact("Use", "Bank"))
 			.until(c -> Bank.isOpen())
 			.delay(1)
-			.repeat(2);
+			.repeat(3);
 
 		action().name("Deposit other items")
 			.oncePerTick()
@@ -90,30 +90,21 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
 			.until(c -> !Bank.isOpen())
 			.delay(1)
-			.repeat(2);
+			.repeat(3);
 
 		action().name("Click make")
 			.when(c -> widget(product()).exists())
 			.then(c -> widget(product()).interact("Make"))
 			//.delay(1)
-			.repeat(2);
+			.repeat(3);
 
 		action().name("Use items")
 			.oncePerTick()
-			.when(c -> /*!c.isAnimating() &&*/ Inventory.contains(primary()) && Inventory.contains(secondary()) && Objects.equals(secondary()[0], "Knife"))
+			.when(c -> /*!c.isAnimating() &&*/ Inventory.contains(primary()) && Inventory.contains(secondary()))
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
 			//.delay(1)
 			.repeat(27);
-
-		action().name("Use items")
-				.oncePerTick()
-				.when(c -> !c.isAnimating() && Inventory.contains(primary()) && Inventory.contains(secondary()) && !Objects.equals(secondary()[0], "Knife"))
-				.then(c -> item(primary()).useOn(item(secondary())))
-				// doesn't work on the same tick the bank was opened
-				.delay(10)
-				.repeat(3);
-
 	}
 
 	private String[] primary()
