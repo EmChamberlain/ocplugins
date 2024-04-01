@@ -93,7 +93,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 		action().name("Click make")
 			.when(c -> widget(product()).exists())
 			.then(c -> widget(product()).interact("Make"))
-			.delay(1)
+			//.delay(1)
 			.repeat(2);
 
 		action().name("Use items")

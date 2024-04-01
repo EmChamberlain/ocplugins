@@ -47,7 +47,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 		setConfig(config);
 		setContext(context);
 		setConfigGroup(SpellsConfig.GROUP_NAME);
-
+		actionsPerTick(1);
 		refreshOnConfigChange(true);
 	}
 
@@ -83,7 +83,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 				&& c.getBankableItems().length > 0)
 			.then(c -> item(c.getBankableItems()).depositX())
 			.until(c -> c.getBankableItems().length == 0)
-			.repeat(2)
+			.repeat(28)
 			.delay(1);
 
 		action().name("Withdraw items")
@@ -94,8 +94,8 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 
 		action().name("Close bank")
 			.when(c -> Bank.isOpen() && Inventory.contains(item))
-			.until(c -> !Bank.isOpen())
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
+			.until(c -> !Bank.isOpen())
 			.delay(1);
 
 		action().name("Cast spell on item")
