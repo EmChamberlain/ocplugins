@@ -19,6 +19,8 @@ import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
+import java.util.Objects;
+
 @Slf4j
 @Extension
 @PluginDescriptor(
@@ -98,11 +100,19 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 
 		action().name("Use items")
 			.oncePerTick()
-			.when(c -> /*!c.isAnimating() &&*/ Inventory.contains(primary()) && Inventory.contains(secondary()))
+			.when(c -> /*!c.isAnimating() &&*/ Inventory.contains(primary()) && Inventory.contains(secondary()) && Objects.equals(secondary()[0], "Knife"))
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
 			//.delay(1)
 			.repeat(27);
+
+		action().name("Use items")
+				.oncePerTick()
+				.when(c -> !c.isAnimating() && Inventory.contains(primary()) && Inventory.contains(secondary()) && !Objects.equals(secondary()[0], "Knife"))
+				.then(c -> item(primary()).useOn(item(secondary())))
+				// doesn't work on the same tick the bank was opened
+				.delay(10)
+				.repeat(3);
 
 	}
 
