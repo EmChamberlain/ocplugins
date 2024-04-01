@@ -36,7 +36,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 		setContext(context);
 		setConfigGroup(BankSkillsConfig.GROUP_NAME);
 		refreshOnConfigChange(true);
-		actionsPerTick(1);
+		actionsPerTick(4);
 		//log.info("Bank skills init called 1");
 	}
 
@@ -86,6 +86,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.oncePerTick()
 			.when(c -> Bank.isOpen())
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
+			.until(c -> !Bank.isOpen())
 			.delay(1)
 			.repeat(2);
 
@@ -93,15 +94,16 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.when(c -> widget(product()).exists())
 			.then(c -> widget(product()).interact("Make"))
 			.delay(1)
-			.repeat(1);
+			.repeat(2);
 
 		action().name("Use items")
-			.oncePerTick()
-			.when(c -> !c.isAnimating() && Inventory.contains(primary()) && Inventory.contains(secondary()))
+			//.oncePerTick()
+			.when(c -> /*!c.isAnimating() &&*/ Inventory.contains(primary()) && Inventory.contains(secondary()))
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
 			.delay(1)
-			.repeat(5);
+			.repeat(5)
+			.many();
 
 	}
 
