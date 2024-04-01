@@ -97,7 +97,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.repeat(2);
 
 		action().name("Use items")
-			//.oncePerTick()
+			.oncePerTick()
 			.when(c -> /*!c.isAnimating() &&*/ Inventory.contains(primary()) && Inventory.contains(secondary()))
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
