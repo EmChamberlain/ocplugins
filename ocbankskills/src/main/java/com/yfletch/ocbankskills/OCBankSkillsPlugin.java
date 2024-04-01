@@ -36,7 +36,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 		setContext(context);
 		setConfigGroup(BankSkillsConfig.GROUP_NAME);
 		refreshOnConfigChange(true);
-		actionsPerTick(4);
+		actionsPerTick(1);
 		//log.info("Bank skills init called 1");
 	}
 
