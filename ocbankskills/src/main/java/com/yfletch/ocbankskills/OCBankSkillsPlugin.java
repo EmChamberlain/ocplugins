@@ -102,7 +102,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
 			//.delay(1)
-			.many();
+			.repeat(27);
 
 	}
 
