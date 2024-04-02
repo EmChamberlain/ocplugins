@@ -109,20 +109,14 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			//.delay(1)
 			.repeat(27);
 
-		final Consumer<BankSkillsContext> postdelayconsumer = c -> {
-			c.flag("postdelay");
-		};
 		action().name("Use items")
 			//.oncePerTick()
 			.when(c -> !c.isAnimating() && Inventory.contains(primary()) && Inventory.contains(secondary()) && !spam() && !c.flag("postdelay"))
-			.then(c -> {
-
-				return item(primary()).useOn(item(secondary()));
-			})
+			.then(c -> item(primary()).useOn(item(secondary())))
 			// doesn't work on the same tick the bank was opened
 			.delay(1)
 			.repeat(2)
-			.onComplete(c -> c.flag("postdelay"));
+			.onComplete(c -> c.flag("postdelay", true, 10));
 	}
 
 	private String[] primary()
