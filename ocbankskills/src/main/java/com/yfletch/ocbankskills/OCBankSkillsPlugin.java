@@ -11,6 +11,8 @@ import static com.yfletch.occore.v2.util.Util.join;
 import static com.yfletch.occore.v2.util.Util.nameContaining;
 import static com.yfletch.occore.v2.util.Util.nameNotMatching;
 import static com.yfletch.occore.v2.util.Util.parseList;
+
+import com.yfletch.occore.v2.test.TestContext;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.widgets.WidgetID;
 import net.runelite.client.config.ConfigManager;
@@ -20,6 +22,7 @@ import net.unethicalite.api.items.Inventory;
 import org.pf4j.Extension;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 @Slf4j
 @Extension
@@ -105,16 +108,21 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			// doesn't work on the same tick the bank was opened
 			//.delay(1)
 			.repeat(27);
+
+		final Consumer<BankSkillsContext> postdelayconsumer = c -> {
+			c.flag("postdelay");
+		};
 		action().name("Use items")
 			//.oncePerTick()
 			.when(c -> !c.isAnimating() && Inventory.contains(primary()) && Inventory.contains(secondary()) && !spam() && !c.flag("postdelay"))
 			.then(c -> {
-				c.flag("postdelay", true, 10);
+
 				return item(primary()).useOn(item(secondary()));
 			})
 			// doesn't work on the same tick the bank was opened
 			.delay(1)
-			.repeat(2);
+			.repeat(2)
+			.onComplete(c -> c.flag("postdelay"));
 	}
 
 	private String[] primary()
