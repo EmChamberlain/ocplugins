@@ -55,4 +55,16 @@ public interface BankSkillsConfig extends CoreConfig
 	{
 		return null;
 	}
+
+	@ConfigItem(
+			keyName = "spam",
+			name = "Spam use",
+			description = "Whether or not to spam use",
+			section = bankSkills,
+			position = 4
+	)
+	default boolean spam()
+	{
+		return true;
+	}
 }
