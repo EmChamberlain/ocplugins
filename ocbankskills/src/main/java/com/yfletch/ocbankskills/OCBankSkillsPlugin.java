@@ -116,7 +116,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			// doesn't work on the same tick the bank was opened
 			.delay(1)
 			.repeat(2)
-			.onComplete(c -> c.flag("postdelay", true, 10));
+			.onComplete(c -> c.flag("postdelay", true, 20));
 	}
 
 	private String[] primary()

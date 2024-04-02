@@ -93,10 +93,12 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.delay(1);
 
 		action().name("Close bank")
+			.oncePerTick()
 			.when(c -> Bank.isOpen() && Inventory.contains(item))
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
 			.until(c -> !Bank.isOpen())
-			.delay(1);
+			.delay(1)
+			.repeat(3);
 
 		action().name("Cast spell on item")
 			.when(c -> !Bank.isOpen() && config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
