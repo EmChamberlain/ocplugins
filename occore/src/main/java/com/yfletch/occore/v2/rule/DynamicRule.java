@@ -256,4 +256,12 @@ public final class DynamicRule<TContext extends CoreContext> implements Rule<TCo
 	{
 		return repeatsLeft;
 	}
+	
+	@Override public DynamicRule<TContext> when(Predicate<TContext> predIn)
+	{
+		if (when != null)
+			throw new IllegalStateException("Multiple when's per action");
+		when = predIn;
+		return this;
+	}
 }

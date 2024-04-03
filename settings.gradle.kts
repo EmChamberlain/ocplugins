@@ -23,6 +23,8 @@ include(":ocspells")
 include(":octrawler")
 include(":octithefarm")
 include(":ocherbi")
+include(":occatherby")
+
 
 for (project in rootProject.children) {
     project.apply {

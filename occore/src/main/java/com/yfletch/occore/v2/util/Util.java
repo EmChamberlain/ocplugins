@@ -89,6 +89,7 @@ public class Util
 		return e -> e != null && e.hasAction(actions);
 	}
 
+	@Deprecated
 	public static String[] join(String[] a, String[] b)
 	{
 		return ArrayUtils.addAll(a, b);
