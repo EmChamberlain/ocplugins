@@ -8,11 +8,4 @@ import net.runelite.client.config.ConfigSection;
 public interface CatherbyConfig extends CoreConfig
 {
     String GROUP_NAME = "oc-catherby";
-
-    @ConfigSection(
-            name = "Catherby",
-            description = "Plugin settings",
-            position = 2
-    )
-    String catherby = "catherby";
 }
