@@ -2,6 +2,8 @@ package com.yfletch.occatherby;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.yfletch.occore.util.NpcHelper;
+import com.yfletch.occore.util.ObjectHelper;
 import com.yfletch.occore.v2.CoreContext;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -9,7 +11,9 @@ import net.runelite.api.Client;
 @Singleton
 public class CatherbyContext extends CoreContext
 {
-    @Inject private Client client;
+    @Inject protected Client client;
+    @Inject protected ObjectHelper objectHelper;
+    @Inject protected NpcHelper npcHelper;
 
     private final int FISHING_ANIMATION = 623;
     private final int COOKING_ANIMATION = 897;
