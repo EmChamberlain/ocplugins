@@ -73,7 +73,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
     public void setup()
     {
         action().name("Drop fish")
-                .when(c -> Inventory.contains("Burnt fish") && Inventory.isFull() && !c.isCooking() && !c.isFishing())
+                .when(c -> Inventory.contains("Burnt fish") && Inventory.isFull() && !c.isCooking() && !c.isHarpooning())
                 .then(c -> item("Burnt fish").drop())
                 .until(c -> !Inventory.contains("Burnt fish"))
                 .many()
@@ -81,7 +81,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
 
         action().name("Harpoon fishing spot")
                 .oncePerTick()
-                .when(c -> getNearestHarpoonFishingSpotNPC(c) != null && !Inventory.isFull() && !c.isFishing())
+                .when(c -> getNearestHarpoonFishingSpotNPC(c) != null && !Inventory.isFull() && !c.isHarpooning())
                 .then(c -> npc(getNearestHarpoonFishingSpotNPC(c).getId()).interact("Harpoon"))
                 .until(c -> Inventory.isFull())
                 .resetsOnTick(true)
@@ -146,7 +146,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 .repeat(3);
 
         action().name("Move to fishing spot")
-                .when(c -> Inventory.contains("Harpoon") && getNearestHarpoonFishingSpotNPC(c) == null && !Bank.isOpen() && !Inventory.isFull() && !c.isFishing() && !Movement.isWalking())
+                .when(c -> Inventory.contains("Harpoon") && getNearestHarpoonFishingSpotNPC(c) == null && !Bank.isOpen() && !Inventory.isFull() && !c.isHarpooning() && !Movement.isWalking())
                 .then(c -> Walking.walkPathTo(fishingWorldPoint, 3))
                 .delay(2)
                 .many()

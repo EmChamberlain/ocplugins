@@ -15,17 +15,17 @@ public class CatherbyContext extends CoreContext
     @Inject protected ObjectHelper objectHelper;
     @Inject protected NpcHelper npcHelper;
 
-    private final int FISHING_ANIMATION = 623;
+    private final int HARPOONING_ANIMATION = 618;
     private final int COOKING_ANIMATION = 897;
 
     private final int CHOPPING_ANIMATION = 999;
 
     private final int FIRE_ANIMATION = 999;
 
-    public boolean isFishing()
+    public boolean isHarpooning()
     {
         //log.info("Animation: " + client.getLocalPlayer().getAnimation());
-        return client.getLocalPlayer().getAnimation() == FISHING_ANIMATION || client.getLocalPlayer().getAnimation() == 622;
+        return client.getLocalPlayer().getAnimation() == HARPOONING_ANIMATION;
     }
 
     public boolean isCooking()
