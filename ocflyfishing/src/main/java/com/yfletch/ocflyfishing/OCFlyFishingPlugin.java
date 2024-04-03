@@ -54,22 +54,26 @@ public class OCFlyFishingPlugin extends RunnerPlugin<FlyFishingContext>
 			.then(c -> npc("Rod Fishing spot").interact("Lure"))
 			.until(c -> c.isFishing())
 			.resetsOnTick(true)
-			.delay(2);
+			.delay(2)
+			.repeat(2);
 
 		action().name("Cook trout")
 			.when(c -> widget("Trout").exists())
 			.then(c -> widget("Trout").interact("Cook"))
-			.until(c -> !Inventory.contains("Raw trout"));
+			.until(c -> !Inventory.contains("Raw trout"))
+			.repeat(2);
 
 		action().name("Cook salmon")
 			.when(c -> widget("Raw salmon").exists())
 			.then(c -> widget("Raw salmon").interact("Cook"))
-			.until(c -> !Inventory.contains("Raw salmon"));
+			.until(c -> !Inventory.contains("Raw salmon"))
+			.repeat(2);
 
 		action().name("Cook fish")
 			.when(c -> Inventory.isFull() && !c.isCooking())
 			.then(c -> object("Fire").interact("Cook"))
-			.delay(2).repeat(2);
+			.delay(2)
+			.repeat(2);
 	}
 
 	@Provides
