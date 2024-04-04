@@ -101,21 +101,21 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 .skipIfNull();
 
         action().name("Cook tuna")
-                .when(c -> widget("Tuna").exists())
-                .then(c -> widget("Tuna").interact("Cook"))
+                .when(c -> widget("Tuna", "Raw tuna").exists())
+                .then(c -> widget("Tuna", "Raw tuna").interact("Cook"))
                 .until(c -> !Inventory.contains("Raw tuna"))
                 .repeat(2);
 
         action().name("Cook swordfish")
-                .when(c -> widget("Swordfish").exists())
-                .then(c -> widget("Swordfish").interact("Cook"))
+                .when(c -> widget("Swordfish", "Raw swordfish").exists())
+                .then(c -> widget("Swordfish", "Raw swordfish").interact("Cook"))
                 .until(c -> !Inventory.contains("Raw swordfish"))
                 .repeat(2);
 
         action().name("Cook fish on range")
                 .when(c -> getNearestRangeObject(c) != null && Inventory.isFull() && !c.isCooking() && Inventory.contains("Raw tuna", "Raw swordfish"))
                 .then(c -> object(getNearestRangeObject(c).getId()).interact("Cook"))
-                .until(c -> widget("Swordfish").exists() || widget("Tuna").exists())
+                .until(c -> widget("Swordfish", "Raw swordfish").exists() || widget("Tuna", "Raw tuna").exists())
                 .delay(2)
                 .repeat(2);
 
