@@ -73,7 +73,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
     public void setup()
     {
         action().name("Drop fish")
-                .when(c -> Inventory.contains("Burnt swordfish", "Burnt swordfish") && Inventory.isFull() && !c.isCooking() && !c.isHarpooning())
+                .when(c -> Inventory.contains("Burnt swordfish", "Burnt tuna") && !c.isCooking() && !c.isHarpooning())
                 .then(c -> {
                     if (Inventory.contains("Burnt tuna"))
                         return item("Burnt tuna").drop();
