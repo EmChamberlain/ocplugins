@@ -121,7 +121,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
 
         action().name("Open bank")
                 .oncePerTick()
-                .when(c -> getNearestBankNPC(c) != null && !Bank.isOpen() && Inventory.isFull() && !Inventory.contains("Raw tuna", "Raw swordfish"))
+                .when(c -> getNearestBankNPC(c) != null && !Bank.isOpen() && !Inventory.contains("Raw tuna", "Raw swordfish"))
                 .then(c -> object(getNearestBankNPC(c).getId()).interact("Bank"))
                 .until(c -> Bank.isOpen())
                 .delay(1)
