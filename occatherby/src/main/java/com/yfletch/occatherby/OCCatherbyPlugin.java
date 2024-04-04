@@ -124,7 +124,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
 
         action().name("Deposit other items")
                 .oncePerTick()
-                .when(c -> Bank.isOpen() && Inventory.contains(nameNotMatching("Raw tuna", "Raw swordfish")))
+                .when(c -> Bank.isOpen() && Inventory.contains(nameNotMatching("Tuna", "Swordfish")))
                 .then(c -> widget("Deposit inventory").interact())
                 .delay(3)
                 .repeat(3)
@@ -148,6 +148,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
         action().name("Move to fishing spot")
                 .when(c -> Inventory.contains("Harpoon") && getNearestHarpoonFishingSpotNPC(c) == null && !Bank.isOpen() && !Inventory.isFull() && !c.isHarpooning() && !Movement.isWalking())
                 .then(c -> Walking.walkPathTo(fishingWorldPoint, 3))
+                .until(c -> getNearestHarpoonFishingSpotNPC(c) != null)
                 .delay(2)
                 .many()
                 .skipIfNull();
