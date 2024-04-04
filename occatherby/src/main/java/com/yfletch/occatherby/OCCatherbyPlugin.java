@@ -43,11 +43,11 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
         actionsPerTick(1);
     }
 
-    private NPC getNearestBankNPC(CatherbyContext c)
+    private TileObject getNearestBankNPC(CatherbyContext c)
     {
         // get nearest npc that has a "Bank" option
-        return c.npcHelper.getNearest(
-                npc -> npc.getActions() != null && Arrays.asList(npc.getActions()).contains("Bank")
+        return c.objectHelper.getNearest(
+                object -> Objects.equals(object.getName(), "Bank booth") && object.getActions() != null && Arrays.asList(object.getActions()).contains("Bank")
         );
     }
 
@@ -122,7 +122,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
         action().name("Open bank")
                 .oncePerTick()
                 .when(c -> getNearestBankNPC(c) != null && !Bank.isOpen() && Inventory.isFull() && !Inventory.contains("Raw tuna", "Raw swordfish"))
-                .then(c -> npc(getNearestBankNPC(c).getId()).interact("Bank"))
+                .then(c -> object(getNearestBankNPC(c).getId()).interact("Bank"))
                 .until(c -> Bank.isOpen())
                 .delay(1)
                 .repeat(3);
