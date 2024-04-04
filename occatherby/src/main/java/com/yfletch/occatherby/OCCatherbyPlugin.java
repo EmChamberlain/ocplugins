@@ -83,7 +83,22 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 })
                 .until(c -> !Inventory.contains("Burnt swordfish", "Burnt swordfish"))
                 .many()
-                .onClick(c -> c.clear("cooking"));
+                .onClick(c -> c.clear("cooking"))
+                .skipIfNull();
+
+        action().name("Cook tuna")
+                .when(c -> widget("Tuna", "Raw tuna").exists())
+                .then(c -> widget("Tuna", "Raw tuna").interact("Cook"))
+                .until(c -> !Inventory.contains("Raw tuna"))
+                .repeat(2)
+                .skipIfNull();
+
+        action().name("Cook swordfish")
+                .when(c -> widget("Swordfish", "Raw swordfish").exists())
+                .then(c -> widget("Swordfish", "Raw swordfish").interact("Cook"))
+                .until(c -> !Inventory.contains("Raw swordfish"))
+                .repeat(2)
+                .skipIfNull();
 
         action().name("Harpoon fishing spot")
                 .oncePerTick()
@@ -91,7 +106,8 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 .then(c -> npc(getNearestHarpoonFishingSpotNPC(c).getId()).interact("Harpoon"))
                 .until(c -> Inventory.isFull())
                 .delay(2)
-                .onComplete(c -> c.flag("WasHarpooning", true, 5));
+                .onComplete(c -> c.flag("WasHarpooning", true, 5))
+                .skipIfNull();
 
         action().name("Move to bank")
                 .when(c -> getNearestRangeObject(c) == null && Inventory.isFull())
@@ -101,32 +117,22 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 .many()
                 .skipIfNull();
 
-        action().name("Cook tuna")
-                .when(c -> widget("Tuna", "Raw tuna").exists())
-                .then(c -> widget("Tuna", "Raw tuna").interact("Cook"))
-                .until(c -> !Inventory.contains("Raw tuna"))
-                .repeat(2);
-
-        action().name("Cook swordfish")
-                .when(c -> widget("Swordfish", "Raw swordfish").exists())
-                .then(c -> widget("Swordfish", "Raw swordfish").interact("Cook"))
-                .until(c -> !Inventory.contains("Raw swordfish"))
-                .repeat(2);
-
         action().name("Cook fish on range")
                 .when(c -> getNearestRangeObject(c) != null && Inventory.isFull() && !c.isCooking() && Inventory.contains("Raw tuna", "Raw swordfish"))
                 .then(c -> object(getNearestRangeObject(c).getId()).interact("Cook"))
                 .until(c -> widget("Swordfish", "Raw swordfish").exists() || widget("Tuna", "Raw tuna").exists())
                 .delay(2)
-                .repeat(2);
+                .repeat(2)
+                .skipIfNull();
 
         action().name("Open bank")
                 .oncePerTick()
-                .when(c -> getNearestBankNPC(c) != null && !Bank.isOpen() && !Inventory.contains("Raw tuna", "Raw swordfish") && Inventory.getAll().size() > 1)
+                .when(c -> getNearestBankNPC(c) != null && !Bank.isOpen() && !Inventory.contains("Raw tuna", "Raw swordfish", "Burnt swordfish", "Burnt tuna") && Inventory.getAll().size() > 1)
                 .then(c -> object(getNearestBankNPC(c).getId()).interact("Bank"))
                 .until(c -> Bank.isOpen())
                 .delay(1)
-                .repeat(3);
+                .repeat(3)
+                .skipIfNull();
 
         action().name("Deposit other items")
                 .oncePerTick()
@@ -142,7 +148,8 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 .when(c -> Bank.isOpen() && !Inventory.contains("Harpoon"))
                 .then(c -> banked("Harpoon").withdraw(1))
                 .until(c -> Inventory.contains("Harpoon"))
-                .delay(3);
+                .delay(3)
+                .skipIfNull();
 
         action().name("Close bank")
                 .oncePerTick()
@@ -150,10 +157,11 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 .then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
                 .until(c -> !Bank.isOpen())
                 .delay(1)
-                .repeat(3);
+                .repeat(3)
+                .skipIfNull();
 
         action().name("Move to fishing spot")
-                .when(c -> Inventory.contains("Harpoon") && getNearestHarpoonFishingSpotNPC(c) == null && !Bank.isOpen() && !Inventory.isFull() && !c.isHarpooning() && !Movement.isWalking() && !c.flag("WasHarpooning"))
+                .when(c -> Inventory.contains("Harpoon") && getNearestHarpoonFishingSpotNPC(c) == null && !Bank.isOpen() && Inventory.getAll().size() == 1 && !c.isHarpooning() && !Movement.isWalking() && !c.flag("WasHarpooning"))
                 .then(c -> Walking.walkPathTo(fishingWorldPoint, 3))
                 .until(c -> getNearestHarpoonFishingSpotNPC(c) != null)
                 .delay(2)
