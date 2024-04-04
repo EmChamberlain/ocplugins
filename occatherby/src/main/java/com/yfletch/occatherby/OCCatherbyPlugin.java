@@ -73,6 +73,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
     public void setup()
     {
         action().name("Drop fish")
+                .oncePerTick()
                 .when(c -> Inventory.contains("Burnt swordfish", "Burnt tuna") && !c.isCooking() && !c.isHarpooning())
                 .then(c -> {
                     if (Inventory.contains("Burnt tuna"))
