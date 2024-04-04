@@ -129,7 +129,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
 
         action().name("Deposit other items")
                 .oncePerTick()
-                .when(c -> Bank.isOpen() && Inventory.contains(nameNotMatching("Tuna", "Swordfish")))
+                .when(c -> Bank.isOpen() && Inventory.contains("Tuna", "Swordfish"))
                 .then(c -> widget("Deposit inventory").interact())
                 .until(c -> Inventory.isEmpty())
                 .delay(3)
