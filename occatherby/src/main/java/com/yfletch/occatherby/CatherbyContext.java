@@ -16,7 +16,9 @@ public class CatherbyContext extends CoreContext
     @Inject protected NpcHelper npcHelper;
 
     private final int HARPOONING_ANIMATION = 618;
-    private final int COOKING_ANIMATION = 897;
+    private final int COOKING_ANIMATION_FIRE = 897;
+    private final int COOKING_ANIMATION_RANGE = 896;
+
 
     private final int CHOPPING_ANIMATION = 999;
 
@@ -30,7 +32,7 @@ public class CatherbyContext extends CoreContext
 
     public boolean isCooking()
     {
-        if (client.getLocalPlayer().getAnimation() == COOKING_ANIMATION)
+        if (client.getLocalPlayer().getAnimation() == COOKING_ANIMATION_FIRE || client.getLocalPlayer().getAnimation() == COOKING_ANIMATION_RANGE)
         {
             flag("cooking", true, 2);
         }
