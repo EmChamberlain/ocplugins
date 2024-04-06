@@ -74,12 +74,12 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
     {
         action().name("Drop fish")
                 .oncePerTick()
-                .when(c -> Inventory.contains("Burnt swordfish", "Burnt tuna") && !c.isCooking() && !c.isHarpooning())
+                .when(c -> Inventory.contains("Burnt swordfish", "Burnt tuna", "Burnt fish") && !c.isCooking() && !c.isHarpooning())
                 .then(c -> {
-                    if (Inventory.contains("Burnt tuna"))
-                        return item("Burnt tuna").drop();
+                    if (Inventory.contains("Burnt tuna", "Burnt fish"))
+                        return item("Burnt tuna", "Burnt fish").drop();
                     else
-                        return item("Burnt swordfish").drop();
+                        return item("Burnt swordfish", "Burnt fish").drop();
                 })
                 .until(c -> !Inventory.contains("Burnt swordfish", "Burnt swordfish"))
                 .many()
