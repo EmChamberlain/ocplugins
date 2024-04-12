@@ -56,4 +56,12 @@ public interface CatherbyConfig extends CoreConfig
             description = "Name of cooked fish seperated by comma",
             position = 6)
     default String cookedFish(){return "swordfish,tuna";}
+
+    @ConfigItem(
+            keyName = "toCook",
+            name = "toCook",
+            description = "Whether to cook the fish or not",
+            position = 7)
+    default boolean toCook(){return true;}
+
 }

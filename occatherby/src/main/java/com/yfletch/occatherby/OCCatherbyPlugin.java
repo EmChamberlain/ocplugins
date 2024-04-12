@@ -128,8 +128,8 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 .many()
                 .skipIfNull();
 
-        action().name("Cook fish on range")
-                .when(c -> getNearestRangeObject(c) != null && Inventory.isFull() && !c.isCooking() && Inventory.contains("Raw"))
+        action().name("Cook fish")
+                .when(c -> config.toCook() && getNearestRangeObject(c) != null && Inventory.isFull() && !c.isCooking() && Inventory.contains("Raw"))
                 .then(c -> object(getNearestRangeObject(c).getId()).interact("Cook"))
                 .until(c -> widget(x -> {
                     String[] splitFish = config.cookedFish().split(",");

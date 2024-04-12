@@ -23,7 +23,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-version = "0.1.3"
+version = "0.1.4"
 
 project.extra["PluginName"] = "OC Catherby"
 project.extra["PluginDescription"] = "One-click Catherby fishing and banking"
