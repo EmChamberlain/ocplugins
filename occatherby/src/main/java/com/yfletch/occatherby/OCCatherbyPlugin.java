@@ -51,7 +51,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
     {
         // get nearest npc that has a "Bank" option
         return c.objectHelper.getNearest(
-                object -> Objects.equals(object.getName(), "Bank booth") && object.getActions() != null && Arrays.asList(object.getActions()).contains("Bank")
+                object -> object != null && object.getActions() != null && Arrays.asList(object.getActions()).contains("Bank")
         );
     }
 
@@ -67,7 +67,7 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
     {
         // get nearest npc that has a "Bank" option
         return c.objectHelper.getNearest(
-                object -> Objects.equals(object.getName(), "Range") && object.getActions() != null && Arrays.asList(object.getActions()).contains("Cook")
+                object -> object != null && object.getActions() != null && Arrays.asList(object.getActions()).contains("Cook")
         );
     }
 
