@@ -7,6 +7,9 @@ import com.yfletch.occore.util.ObjectHelper;
 import com.yfletch.occore.v2.CoreContext;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
+
+import java.util.ArrayList;
+
 @Slf4j
 @Singleton
 public class CatherbyContext extends CoreContext
@@ -15,24 +18,37 @@ public class CatherbyContext extends CoreContext
     @Inject protected ObjectHelper objectHelper;
     @Inject protected NpcHelper npcHelper;
 
-    private final int HARPOONING_ANIMATION = 618;
-    private final int COOKING_ANIMATION_FIRE = 897;
-    private final int COOKING_ANIMATION_RANGE = 896;
+    private final ArrayList<Integer> fishingAnimations = new ArrayList<>();
+    private final ArrayList<Integer> cookingAnimations = new ArrayList<>();
 
 
-    private final int CHOPPING_ANIMATION = 999;
 
-    private final int FIRE_ANIMATION = 999;
+    public CatherbyContext()
+    {
+        fishingAnimations.add(618);
+        fishingAnimations.add(619);
+        fishingAnimations.add(622);
+        fishingAnimations.add(6703);
+        fishingAnimations.add(6704);
+        fishingAnimations.add(6707);
+        fishingAnimations.add(6708);
+        fishingAnimations.add(6709);
+        fishingAnimations.add(7261);
 
-    public boolean isHarpooning()
+        cookingAnimations.add(883);
+        cookingAnimations.add(896);
+        cookingAnimations.add(897);
+    }
+
+    public boolean isFishing()
     {
         //log.info("Animation: " + client.getLocalPlayer().getAnimation());
-        return client.getLocalPlayer().getAnimation() == HARPOONING_ANIMATION;
+        return fishingAnimations.contains(client.getLocalPlayer().getAnimation());
     }
 
     public boolean isCooking()
     {
-        if (client.getLocalPlayer().getAnimation() == COOKING_ANIMATION_FIRE || client.getLocalPlayer().getAnimation() == COOKING_ANIMATION_RANGE)
+        if (cookingAnimations.contains(client.getLocalPlayer().getAnimation()))
         {
             flag("cooking", true, 2);
         }
@@ -40,14 +56,5 @@ public class CatherbyContext extends CoreContext
         return flag("cooking");
     }
 
-    public boolean isChopping()
-    {
-        return client.getLocalPlayer().getAnimation() == CHOPPING_ANIMATION;
-    }
-
-    public boolean isFire()
-    {
-        return client.getLocalPlayer().getAnimation() == FIRE_ANIMATION;
-    }
 }
 
