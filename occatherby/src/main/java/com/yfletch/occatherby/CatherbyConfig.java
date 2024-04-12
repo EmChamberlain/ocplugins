@@ -11,7 +11,7 @@ public interface CatherbyConfig extends CoreConfig
             keyName = "identifierAction",
             name = "identifierAction",
             description = "Name of action to fish at",
-            position = 0
+            position = 2
     )
     default String identifierAction()
     {
@@ -21,7 +21,7 @@ public interface CatherbyConfig extends CoreConfig
             keyName = "fishingAction",
             name = "fishingAction",
             description = "Name of action to use at fishing spot",
-            position = 1
+            position = 3
     )
     default String fishingAction()
     {
@@ -32,7 +32,7 @@ public interface CatherbyConfig extends CoreConfig
             keyName = "fishingItem",
             name = "fishingItem",
             description = "Name of item to use at fishing spot",
-            position = 2
+            position = 4
     )
     default String fishingItem()
     {
@@ -43,29 +43,17 @@ public interface CatherbyConfig extends CoreConfig
             keyName = "setBankTile",
             name = "setBankTile",
             description = "Sets bank tile",
-            position = 3)
+            position = 5)
     default Button setBankTile()
     {
         return new Button();
     }
 
-    @ConfigItem(
-            keyName = "widgetsToClick",
-            name = "widgetsToClick",
-            description = "Names of widgets to click",
-            position = 4)
-    default String[] widgetsToClick()
-    {
-        return new String[5];
-    }
 
     @ConfigItem(
             keyName = "cookedFish",
             name = "cookedFish",
-            description = "Name of cooked fish",
-            position = 5)
-    default String[] cookedFish()
-    {
-        return new String[5];
-    }
+            description = "Name of cooked fish seperated by comma",
+            position = 6)
+    default String cookedFish(){return "swordfish,tuna";}
 }

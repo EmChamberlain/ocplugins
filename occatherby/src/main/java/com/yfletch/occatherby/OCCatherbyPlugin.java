@@ -88,8 +88,24 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
                 .skipIfNull();
 
         action().name("Cook")
-                .when(c -> widget(config.widgetsToClick()).exists())
-                .then(c -> widget(config.widgetsToClick()).interact("Cook"))
+                .when(c -> widget(x -> {
+                    String[] splitFish = config.cookedFish().split(",");
+                    for (String fish : splitFish)
+                    {
+                        if (x.toLowerCase().contains(fish.toLowerCase()))
+                            return true;
+                    }
+                    return false;
+                }).exists())
+                .then(c -> widget(x -> {
+                    String[] splitFish = config.cookedFish().split(",");
+                    for (String fish : splitFish)
+                    {
+                        if (x.toLowerCase().contains(fish.toLowerCase()))
+                            return true;
+                    }
+                    return false;
+                }).interact("Cook"))
                 .until(c -> !Inventory.contains("Raw"))
                 .repeat(2)
                 .skipIfNull();
@@ -115,7 +131,15 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
         action().name("Cook fish on range")
                 .when(c -> getNearestRangeObject(c) != null && Inventory.isFull() && !c.isCooking() && Inventory.contains("Raw"))
                 .then(c -> object(getNearestRangeObject(c).getId()).interact("Cook"))
-                .until(c -> widget(config.widgetsToClick()).exists())
+                .until(c -> widget(x -> {
+                    String[] splitFish = config.cookedFish().split(",");
+                    for (String fish : splitFish)
+                    {
+                        if (x.toLowerCase().contains(fish.toLowerCase()))
+                            return true;
+                    }
+                    return false;
+                }).exists())
                 .delay(2)
                 .repeat(2)
                 .skipIfNull();
@@ -131,7 +155,15 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
 
         action().name("Deposit other items")
                 .oncePerTick()
-                .when(c -> Bank.isOpen() && Inventory.contains(config.cookedFish()))
+                .when(c -> Bank.isOpen() && Inventory.contains(x -> {
+                    String[] splitFish = config.cookedFish().split(",");
+                    for (String fish : splitFish)
+                    {
+                        if (x.getName().toLowerCase().contains(fish.toLowerCase()))
+                            return true;
+                    }
+                    return false;
+                }))
                 .then(c -> widget("Deposit inventory").interact())
                 .until(c -> Inventory.isEmpty())
                 .delay(3)
