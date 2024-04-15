@@ -13,6 +13,7 @@ import net.runelite.api.widgets.WidgetID;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
 import net.unethicalite.api.entities.Players;
 import net.unethicalite.api.items.Bank;
 import net.unethicalite.api.items.Inventory;
@@ -36,6 +37,11 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
 {
     @Inject private CatherbyConfig config;
     @Inject private CatherbyContext context;
+
+    @Inject private OCCatherbyOverlay overlay;
+
+    @Inject private OverlayManager overlayManager;
+    private boolean overlayEnabled;
 
     @Inject
     public void init(CatherbyConfig config, CatherbyContext context)
@@ -71,13 +77,15 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
         );
     }
 
-    private static WorldPoint bankWorldPoint = new WorldPoint(2814, 3437, 0);
-    private static WorldPoint fishingWorldPoint = new WorldPoint(2848, 3431, 0);
+    public WorldPoint bankWorldPoint = new WorldPoint(2814, 3437, 0);
+
+    //TODO: Implement below
+    public WorldPoint cookWorldPoint = new WorldPoint(2814, 3440, 0);
+    public WorldPoint fishingWorldPoint = new WorldPoint(2848, 3431, 0);
 
     @Override
     public void setup()
     {
-        fishingWorldPoint = context.client.getLocalPlayer().getWorldLocation();
         action().name("Drop fish")
                 .oncePerTick()
                 .when(c -> Inventory.contains("Burnt") && !c.isCooking() && !c.isFishing())
@@ -215,7 +223,47 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
         {
             bankWorldPoint = context.client.getLocalPlayer().getWorldLocation();
         }
+        if (event.getKey().toLowerCase().contains("setfishtile"))
+        {
+            bankWorldPoint = context.client.getLocalPlayer().getWorldLocation();
+        }
+        if (event.getKey().toLowerCase().contains("setcooktile"))
+        {
+            bankWorldPoint = context.client.getLocalPlayer().getWorldLocation();
+        }
 
+    }
+
+    @Override
+    protected void startUp()
+    {
+        enableOverlay();
+    }
+
+    @Override
+    protected void shutDown()
+    {
+        disableOverlay();
+    }
+
+    private void enableOverlay()
+    {
+        if (overlayEnabled)
+        {
+            return;
+        }
+
+        overlayEnabled = true;
+        overlayManager.add(overlay);
+    }
+
+    private void disableOverlay()
+    {
+        if (overlayEnabled)
+        {
+            overlayManager.remove(overlay);
+        }
+        overlayEnabled = false;
     }
 }
 

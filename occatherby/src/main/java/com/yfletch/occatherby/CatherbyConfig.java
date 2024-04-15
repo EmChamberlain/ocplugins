@@ -49,6 +49,26 @@ public interface CatherbyConfig extends CoreConfig
         return new Button();
     }
 
+    @ConfigItem(
+            keyName = "setFishTile",
+            name = "setFishTile",
+            description = "Sets fish tile",
+            position = 5)
+    default Button setFishTile()
+    {
+        return new Button();
+    }
+
+    @ConfigItem(
+            keyName = "setCookTile",
+            name = "setCookTile",
+            description = "Sets cook tile",
+            position = 5)
+    default Button setCookTile()
+    {
+        return new Button();
+    }
+
 
     @ConfigItem(
             keyName = "cookedFish",
