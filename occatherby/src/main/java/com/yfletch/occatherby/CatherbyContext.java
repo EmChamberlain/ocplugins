@@ -26,29 +26,31 @@ public class CatherbyContext extends CoreContext
     public CatherbyContext()
     {
         fishingAnimations.add(618);
-        fishingAnimations.add(619);
-        fishingAnimations.add(622);
-        fishingAnimations.add(6703);
-        fishingAnimations.add(6704);
-        fishingAnimations.add(6707);
-        fishingAnimations.add(6708);
-        fishingAnimations.add(6709);
-        fishingAnimations.add(7261);
+//        fishingAnimations.add(619);
+//        fishingAnimations.add(622);
+//        fishingAnimations.add(6703);
+//        fishingAnimations.add(6704);
+//        fishingAnimations.add(6707);
+//        fishingAnimations.add(6708);
+//        fishingAnimations.add(6709);
+//        fishingAnimations.add(7261);
 
-        cookingAnimations.add(883);
+//        cookingAnimations.add(883);
         cookingAnimations.add(896);
-        cookingAnimations.add(897);
+//        cookingAnimations.add(897);
     }
 
     public boolean isFishing()
     {
+        if (client.getLocalPlayer().getAnimation() == -1)
+            return false;
         //log.info("Animation: " + client.getLocalPlayer().getAnimation());
         return fishingAnimations.contains(client.getLocalPlayer().getAnimation());
     }
 
     public boolean isCooking()
     {
-        if (cookingAnimations.contains(client.getLocalPlayer().getAnimation()))
+        if (client.getLocalPlayer().getAnimation() != -1 && cookingAnimations.contains(client.getLocalPlayer().getAnimation()))
         {
             flag("cooking", true, 2);
         }
