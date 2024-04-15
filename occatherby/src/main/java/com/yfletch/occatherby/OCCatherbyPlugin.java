@@ -237,12 +237,14 @@ public class OCCatherbyPlugin extends RunnerPlugin<CatherbyContext>
     @Override
     protected void startUp()
     {
+        super.startUp();
         enableOverlay();
     }
 
     @Override
     protected void shutDown()
     {
+        super.shutDown();
         disableOverlay();
     }
 
