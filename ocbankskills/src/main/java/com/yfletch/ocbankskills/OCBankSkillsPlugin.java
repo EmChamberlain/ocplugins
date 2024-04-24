@@ -69,7 +69,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 
 		action().name("Deposit other items")
 			.oncePerTick()
-			.when(c -> Bank.isOpen() && Inventory.contains(nameNotMatching(join(join(primary(), secondary()), tertiary()))))
+			.when(c -> Bank.isOpen() && !Inventory.isEmpty() && !Inventory.contains(primary()))
 			.then(c -> widget("Deposit inventory").interact())
 			.delay(3)
 			.repeat(3);
