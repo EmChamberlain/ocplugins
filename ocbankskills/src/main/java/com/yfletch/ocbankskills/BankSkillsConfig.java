@@ -45,11 +45,24 @@ public interface BankSkillsConfig extends CoreConfig
 	}
 
 	@ConfigItem(
+			keyName = "tertiary",
+			name = "tertiary item names",
+			description = "tertiary item names, comma separated",
+			section = bankSkills,
+			position = 3
+	)
+	@Range(min = -1)
+	default String tertiary()
+	{
+		return null;
+	}
+
+	@ConfigItem(
 		keyName = "product",
 		name = "Product item name",
 		description = "Option to click in the skill interface",
 		section = bankSkills,
-		position = 3
+		position = 4
 	)
 	default String product()
 	{
@@ -61,7 +74,7 @@ public interface BankSkillsConfig extends CoreConfig
 			name = "Spam use",
 			description = "Whether or not to spam use",
 			section = bankSkills,
-			position = 4
+			position = 5
 	)
 	default boolean spam()
 	{

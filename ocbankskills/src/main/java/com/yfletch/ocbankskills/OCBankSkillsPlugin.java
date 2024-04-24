@@ -88,6 +88,13 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.until(c -> Inventory.contains(secondary()))
 			.delay(3);
 
+		action().name("Withdraw tertiary")
+				.oncePerTick()
+				.when(c -> Bank.isOpen() && !Inventory.contains(tertiary()))
+				.then(c -> banked(tertiary()).withdrawX())
+				.until(c -> Inventory.contains(tertiary()))
+				.delay(3);
+
 		action().name("Close bank")
 			.oncePerTick()
 			.when(c -> Bank.isOpen())
@@ -128,6 +135,11 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 	private String[] secondary()
 	{
 		return parseList(config.secondary());
+	}
+
+	private String[] tertiary()
+	{
+		return parseList(config.tertiary());
 	}
 
 	private String[] product()
