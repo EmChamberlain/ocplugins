@@ -12,6 +12,9 @@ import static com.yfletch.occore.v2.util.Util.nameContaining;
 import static com.yfletch.occore.v2.util.Util.nameNotMatching;
 import static com.yfletch.occore.v2.util.Util.parseList;
 
+import com.yfletch.occore.v2.interaction.DeferredEntityInteraction;
+import com.yfletch.occore.v2.interaction.DeferredInteractable;
+import com.yfletch.occore.v2.interaction.DeferredInteraction;
 import com.yfletch.occore.v2.test.TestContext;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.widgets.WidgetID;
@@ -104,25 +107,24 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.repeat(3);
 
 		action().name("Click make")
-			.when(c -> widget(x -> {
+			.when(c -> {
 				for (String widgetString : config.product().split(","))
 				{
-					if (x.toLowerCase().contains(widgetString.toLowerCase()))
+					var widget = widget(x -> x != null && !x.isEmpty() && x.toLowerCase().contains(widgetString.toLowerCase()));
+					if (widget.exists())
 						return true;
 				}
 				return false;
-			}).exists())
-			.then(c ->
-			{
-				var widget = widget(x -> {
-					for (String widgetString : config.product().split(","))
-					{
-						if (x.toLowerCase().contains(widgetString.toLowerCase()))
-							return true;
-					}
-					return false;
-				});
-				return widget.interact("Make");
+			})
+			.then(c -> {
+				for (String widgetString : config.product().split(","))
+				{
+					var widget = widget(x -> x != null && !x.isEmpty() && x.toLowerCase().contains(widgetString.toLowerCase()));
+					if (widget.exists())
+						return widget.interact("Make");
+				}
+				log.info("No widget in then. Returning null");
+				return null;
 			})
 			//.delay(1)
 			.repeat(3);
