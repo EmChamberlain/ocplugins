@@ -61,7 +61,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 
 		action().name("Open bank")
 			.oncePerTick()
-			.when(c -> (!Inventory.contains(primary()) || !Inventory.contains(secondary())) && (!Bank.isOpen()))
+			.when(c -> (!Inventory.contains(primary()) || !Inventory.contains(secondary()) || !Inventory.contains(tertiary())) && (!Bank.isOpen()))
 			.then(c -> entity(nameContaining("bank")).interact("Use", "Bank"))
 			.until(c -> Bank.isOpen())
 			.delay(1)
@@ -69,7 +69,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 
 		action().name("Deposit other items")
 			.oncePerTick()
-			.when(c -> Bank.isOpen() && Inventory.contains(nameNotMatching(join(primary(), secondary()))))
+			.when(c -> Bank.isOpen() && Inventory.contains(nameNotMatching(join(join(primary(), secondary()), tertiary()))))
 			.then(c -> widget("Deposit inventory").interact())
 			.delay(3)
 			.repeat(3);
@@ -90,7 +90,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 
 		action().name("Withdraw tertiary")
 				.oncePerTick()
-				.when(c -> Bank.isOpen() && !Inventory.contains(tertiary()))
+				.when(c -> tertiary().length > 0 && Bank.isOpen() && !Inventory.contains(tertiary()))
 				.then(c -> banked(tertiary()).withdrawX())
 				.until(c -> Inventory.contains(tertiary()))
 				.delay(3);
@@ -104,8 +104,26 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.repeat(3);
 
 		action().name("Click make")
-			.when(c -> widget(product()).exists())
-			.then(c -> widget(product()).interact("Make"))
+			.when(c -> widget(x -> {
+				for (String widgetString : config.product().split(","))
+				{
+					if (x.toLowerCase().contains(widgetString.toLowerCase()))
+						return true;
+				}
+				return false;
+			}).exists())
+			.then(c ->
+			{
+				var widget = widget(x -> {
+					for (String widgetString : config.product().split(","))
+					{
+						if (x.toLowerCase().contains(widgetString.toLowerCase()))
+							return true;
+					}
+					return false;
+				});
+				return widget.interact("Make");
+			})
 			//.delay(1)
 			.repeat(3);
 
