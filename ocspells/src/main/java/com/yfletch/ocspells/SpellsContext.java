@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.Client;
 import net.runelite.api.Item;
 import net.unethicalite.api.items.Inventory;
 
@@ -16,6 +17,8 @@ import net.unethicalite.api.items.Inventory;
 public class SpellsContext extends CoreContext
 {
 	@Inject private SpellsConfig config;
+
+	@Inject private Client client;
 
 	@Getter
 	@Setter
@@ -34,5 +37,10 @@ public class SpellsContext extends CoreContext
 			.filter(name -> !name.endsWith(" rune")
 				&& !name.contains("une pouch"))
 			.toArray(String[]::new);
+	}
+
+	public boolean isAnimating()
+	{
+		return client.getLocalPlayer().isAnimating();
 	}
 }
