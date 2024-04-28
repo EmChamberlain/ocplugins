@@ -23,7 +23,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-version = "1.2.11"
+version = "1.2.12"
 
 project.extra["PluginName"] = "OC Spells"
 project.extra["PluginDescription"] = "One-click bankstanding spells"

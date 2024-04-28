@@ -69,21 +69,18 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 
 		requirements()
 			.mustBeAbleToCast(spell);
+
 		action().name("Open bank")
 			.when(c -> !Inventory.contains(item) && !Bank.isOpen())
 			.then(c -> entity(nameContaining("Bank")).interact("Use", "Bank"))
-			.until(c -> Bank.isOpen())
-			.repeat(3)
-			.delay(1);
+			.until(c -> Bank.isOpen());
 
 		action().name("Deposit other items")
 			.when(c -> Bank.isOpen()
 				&& !Inventory.contains(item)
 				&& c.getBankableItems().length > 0)
 			.then(c -> item(c.getBankableItems()).depositX())
-			.until(c -> c.getBankableItems().length == 0)
-			.repeat(28)
-			.delay(1);
+			.until(c -> c.getBankableItems().length == 0);
 
 		action().name("Withdraw items")
 			.when(c -> Bank.isOpen() && !Inventory.contains(item))
@@ -95,8 +92,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.oncePerTick()
 			.when(c -> Bank.isOpen() && Inventory.contains(item))
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
-			.until(c -> !Bank.isOpen())
-			.repeat(3);
+			.until(c -> !Bank.isOpen());
 
 //		action().name("Cast spell on item")
 //			.when(c -> !Bank.isOpen() && config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
