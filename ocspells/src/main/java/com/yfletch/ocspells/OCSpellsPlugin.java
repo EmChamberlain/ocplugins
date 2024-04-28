@@ -99,23 +99,23 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.until(c -> !Bank.isOpen())
 			.repeat(3);
 
-//		action().name("Cast spell on item")
-//			.when(c -> !Bank.isOpen() && config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
-//			.then(c -> spell(spell).castOn(item(item)))
-//			.onClick(c -> c.flag("casting", true, 5));
-//
-//		action().name("Cast spell")
-//			.when(c -> !Bank.isOpen() && !config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
-//			.then(c -> spell(spell).cast())
-//			.onClick(c -> c.flag("casting", true, 5));
-
 		action().name("Cast spell on item")
-				.when(c -> !Bank.isOpen() && config.castOnItem() && !c.isAnimating() && Inventory.contains(item))
-				.then(c -> spell(spell).castOn(item(item)));
+			.when(c -> !Bank.isOpen() && config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
+			.then(c -> spell(spell).castOn(item(item)))
+			.onClick(c -> c.flag("casting", true, 2));
 
 		action().name("Cast spell")
-				.when(c -> !Bank.isOpen() && !config.castOnItem() && !c.isAnimating() && Inventory.contains(item))
-				.then(c -> spell(spell).cast());
+			.when(c -> !Bank.isOpen() && !config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
+			.then(c -> spell(spell).cast())
+			.onClick(c -> c.flag("casting", true, 2));
+
+//		action().name("Cast spell on item")
+//				.when(c -> !Bank.isOpen() && config.castOnItem() && !c.isAnimating() && Inventory.contains(item))
+//				.then(c -> spell(spell).castOn(item(item)));
+//
+//		action().name("Cast spell")
+//				.when(c -> !Bank.isOpen() && !config.castOnItem() && !c.isAnimating() && Inventory.contains(item))
+//				.then(c -> spell(spell).cast());
 
 		action().name("Casting spell")
 			.message("Casting spell...")
