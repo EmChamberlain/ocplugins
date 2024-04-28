@@ -137,42 +137,6 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 		}
 	}
 
-	@Subscribe
-	public void onMenuEntryAdded(MenuEntryAdded event)
-	{
-		if (event.getOption().equals("Cast") && !event.getTarget().contains("->"))
-		{
-			client.createMenuEntry(-1)
-				.setOption("One-click spell")
-				.setTarget(event.getTarget())
-				.setType(MenuAction.RUNELITE)
-				.onClick(e -> {
-					final var spell = Text.removeTags(event.getTarget());
-					configManager.setConfiguration(
-						SpellsConfig.GROUP_NAME,
-						"spell",
-						spell
-					);
-				});
-		}
-
-		if (event.getItemId() > 0 && event.getOption().equals("Use"))
-		{
-			client.createMenuEntry(-1)
-				.setOption("One-click item")
-				.setTarget(event.getTarget())
-				.setType(MenuAction.RUNELITE)
-				.onClick(e -> {
-					final var item = Text.removeTags(event.getTarget());
-					configManager.setConfiguration(
-						SpellsConfig.GROUP_NAME,
-						"item",
-						item
-					);
-				});
-		}
-	}
-
 	@Provides
 	SpellsConfig getConfig(ConfigManager configManager)
 	{
