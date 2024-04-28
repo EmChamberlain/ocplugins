@@ -68,9 +68,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 		}
 
 		requirements()
-			.mustBeAbleToCast(spell)
-			.mustHaveBanked(item);
-
+			.mustBeAbleToCast(spell);
 		action().name("Open bank")
 			.when(c -> !Inventory.contains(item) && !Bank.isOpen())
 			.then(c -> entity(nameContaining("Bank")).interact("Use", "Bank"))
@@ -119,11 +117,13 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 
 		action().name("Cast spell on item")
 				.when(c -> !Bank.isOpen() && config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
-				.then(c -> spell(spell).castOn(item(item)));
+				.then(c -> spell(spell).castOn(item(item)))
+				.until(SpellsContext::isAnimating);
 
 		action().name("Cast spell")
 				.when(c -> !Bank.isOpen() && !config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
-				.then(c -> spell(spell).cast());
+				.then(c -> spell(spell).cast())
+				.until(SpellsContext::isAnimating);
 
 		action().name("Casting spell")
 			.message("Casting spell...")
