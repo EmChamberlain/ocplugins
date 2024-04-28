@@ -75,7 +75,7 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.when(c -> !Inventory.contains(item) && !Bank.isOpen())
 			.then(c -> entity(nameContaining("Bank")).interact("Use", "Bank"))
 			.until(c -> Bank.isOpen())
-			.delay(2);
+			.delay(1);
 
 		action().name("Deposit other items")
 			.when(c -> Bank.isOpen()
@@ -97,7 +97,6 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.when(c -> Bank.isOpen() && Inventory.contains(item))
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
 			.until(c -> !Bank.isOpen())
-			.delay(1)
 			.repeat(3);
 
 //		action().name("Cast spell on item")
