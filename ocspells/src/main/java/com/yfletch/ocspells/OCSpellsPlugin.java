@@ -124,10 +124,6 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 			.oncePerTick()
 			.when(c -> !Bank.isOpen() && !config.castOnItem() && !c.flag("casting") && Inventory.contains(item))
 			.then(c -> spell(spell).cast());
-
-		action().name("Casting spell")
-			.message("Casting spell...")
-			.noop();
 	}
 
 	@Subscribe
