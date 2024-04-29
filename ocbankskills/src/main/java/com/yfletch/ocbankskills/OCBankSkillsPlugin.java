@@ -58,55 +58,44 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 			.must(c -> product().length > 0, "Product item(s) must be set")
 			.mustBeNear(() -> entity(nameContaining("bank")), "any bank");
 
-		requirements().name("Item checks")
-			.when(c -> primary().length > 0 && secondary().length > 0)
-			.mustHave(join(primary(), secondary()));
-
 		action().name("Open bank")
 			.oncePerTick()
 			.when(c -> (!Inventory.contains(primary()) || !Inventory.contains(secondary()) || !Inventory.contains(tertiary())) && (!Bank.isOpen()))
 			.then(c -> entity(nameContaining("bank")).interact("Use", "Bank"))
-			.until(c -> Bank.isOpen())
-			.delay(1)
-			.repeat(3);
+			.until(c -> Bank.isOpen());
 
 		action().name("Deposit other items")
 			.oncePerTick()
 			.when(c -> Bank.isOpen() && !Inventory.isEmpty() && !Inventory.contains(primary()))
 			.then(c -> widget("Deposit inventory").interact())
-			.delay(3)
 			.repeat(3);
 
 		action().name("Withdraw primary")
 			.oncePerTick()
 			.when(c -> Bank.isOpen() && !Inventory.contains(primary()))
 			.then(c -> banked(primary()).withdrawX())
-			.until(c -> Inventory.contains(primary()))
-			.delay(3);
+			.until(c -> Inventory.contains(primary()));
 
 		action().name("Withdraw secondary")
 			.oncePerTick()
 			.when(c -> Bank.isOpen() && !Inventory.contains(secondary()))
 			.then(c -> banked(secondary()).withdrawX())
-			.until(c -> Inventory.contains(secondary()))
-			.delay(3);
+			.until(c -> Inventory.contains(secondary()));
 
 		action().name("Withdraw tertiary")
-				.oncePerTick()
-				.when(c -> tertiary().length > 0 && Bank.isOpen() && !Inventory.contains(tertiary()))
-				.then(c -> banked(tertiary()).withdrawX())
-				.until(c -> Inventory.contains(tertiary()))
-				.delay(3);
+			.oncePerTick()
+			.when(c -> tertiary().length > 0 && Bank.isOpen() && !Inventory.contains(tertiary()))
+			.then(c -> banked(tertiary()).withdrawX())
+			.until(c -> Inventory.contains(tertiary()));
 
 		action().name("Close bank")
 			.oncePerTick()
 			.when(c -> Bank.isOpen())
 			.then(c -> widget(WidgetID.BANK_GROUP_ID, "Close").interact())
-			.until(c -> !Bank.isOpen())
-			.delay(1)
-			.repeat(3);
+			.until(c -> !Bank.isOpen());
 
 		action().name("Click make")
+			.oncePerTick()
 			.when(c -> {
 				for (String widgetString : config.product().split(","))
 				{
@@ -125,9 +114,7 @@ public class OCBankSkillsPlugin extends RunnerPlugin<BankSkillsContext>
 				}
 				log.info("No widget in then. Returning null");
 				return null;
-			})
-			//.delay(1)
-			.repeat(3);
+			});
 
 		action().name("Use items")
 			.oncePerTick()
