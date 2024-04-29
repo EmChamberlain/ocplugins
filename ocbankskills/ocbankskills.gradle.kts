@@ -23,7 +23,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-version = "2.1.1"
+version = "2.1.3"
 
 project.extra["PluginName"] = "OC Bank Skills"
 project.extra["PluginDescription"] = "One-click bank skills (Herblore, Fletching, Crafting)"
