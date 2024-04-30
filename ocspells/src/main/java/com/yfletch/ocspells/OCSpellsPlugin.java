@@ -80,7 +80,8 @@ public class OCSpellsPlugin extends RunnerPlugin<SpellsContext>
 				&& !Inventory.contains(item)
 				&& c.getBankableItems().length > 0)
 			.then(c -> item(c.getBankableItems()).depositX())
-			.until(c -> c.getBankableItems().length == 0);
+			.until(c -> c.getBankableItems().length == 0)
+			.repeat(3);
 
 		action().name("Withdraw items")
 			.when(c -> Bank.isOpen() && !Inventory.contains(item))
